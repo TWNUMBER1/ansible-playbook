@@ -1,0 +1,17 @@
+---
+- hosts: cloud
+  gather_facts: no
+  pre_tasks:
+    - name: "set user for the play"   
+      set_fact: ansible_user="{{ my_user }}"
+    - name: "set password for the play"
+      set_fact: ansible_ssh_pass="{{ my_pass }}"
+    - name: 'install python2'
+      raw: apt-get -y install python-simplejson
+      become: yes
+      become_method: "sudo"
+
+- include: ./playbooks/addUser.yml
+- include: ./playbooks/configSSH.yml
+- include: ./playbooks/installDocker.yml
+- include: ./playbooks/installApp.yml

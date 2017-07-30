@@ -1,0 +1,8 @@
+- hosts: cloud
+  gather_facts: no
+  remote_user: "{{ my_user }}"
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Get updated files from git repository 
+      git: repo=https://{{ github_user }}:{{ github_pwd }}@github.com/TWNUMBER1/RestAPIPractice.git dest=~{{ unix_user }}/apps/RESTAPP 

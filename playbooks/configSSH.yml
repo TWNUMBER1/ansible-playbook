@@ -1,0 +1,18 @@
+- hosts: cloud
+  tasks:
+  - name: make sure user can login with password
+    lineinfile:
+      path: /etc/ssh/sshd_config
+      state: present
+      regexp: '^PasswordAuthentication'
+      line: 'PasswordAuthentication yes'
+    become: yes
+    become_method: "sudo"
+
+  - name:  Restart ssh service
+    systemd: 
+      state: restarted 
+      name: ssh
+      enabled: yes
+    become: yes
+    become_method: "sudo"

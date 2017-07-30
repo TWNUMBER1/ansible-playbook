@@ -1,0 +1,60 @@
+- hosts: cloud
+  vars_prompt:
+    - name: "unix_password"
+      prompt: "########## Enter Password for new created user:\n"
+      private: yes
+      encrypt: "md5_crypt"
+      confirm: yes
+      salt_size: 7
+  tasks:
+  - name: Update apt cache
+    apt:
+      update_cache: yes
+      cache_valid_time: 3600
+    become: yes
+    become_method: "sudo"
+  
+  - group: name=sudo state=present
+
+  - name: Add deployer user and add it to sudo
+    user: 
+      name: "{{unix_user}}"
+      password: "{{unix_password}}"
+      state: present
+      createhome: yes
+      groups: sudo
+      shell: /bin/bash
+    become: yes
+    become_method: "sudo"
+
+  # Validate the sudoers file before saving todo
+  - lineinfile:
+      path: /etc/sudoers
+      state: present
+      regexp: '^%sudo'
+      line: '%sudo   ALL=(ALL) NOPASSWD: ALL'
+      validate: 'visudo -cf %s'
+    become: yes
+    become_method: "sudo"
+
+  - name: install python components
+    apt: name={{item}} state=present update_cache=yes
+    with_items:
+      - python-pip
+    become: yes
+    become_method: "sudo"
+
+  - name: modify bash_profile to show git branch name in shell
+    blockinfile:
+      path: /home/testuser/.profile
+      state: present
+      marker: "## {mark} ANSIBLE MANAGED BLOCK"
+      content: |
+        parse_git_branch() {
+             git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+        }
+        export PS1="\u@\h \[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ "
+    become: yes
+    become_method: "sudo"
+
+      
