@@ -5,4 +5,12 @@
   become_method: sudo
   tasks:
     - name: Get updated files from git repository 
-      git: repo=https://{{ github_user }}:{{ github_pwd }}@github.com/TWNUMBER1/RestAPIPractice.git dest=~{{ unix_user }}/apps/RESTAPP 
+      git: repo=https://github.com/TWNUMBER1/RestAPIPractice.git dest=~{{ unix_user }}/apps/RESTAPP
+
+    - name: chown apps to user 
+      file:
+        path: ~{{ unix_user }}/apps/RESTAPP
+        owner: "{{ unix_user }}"
+        group: "{{ unix_user }}"
+        recurse: yes
+        mode: 0700
