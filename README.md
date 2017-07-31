@@ -15,11 +15,10 @@ ec2-34-229-88-78.compute-1.amazonaws.com
 1. Fill up userinfo in ./group_vars/all/userinfo
 ```sh
 ---
-my_user: ubuntu   
-my_pass: <password>
-unix_user: <user_to_be_create>
-github_user: <github_account>
-github_pwd: <github_passwd>
+my_user: ubuntu 
+my_pass: ubuntu_pwd
+unix_user: userBeCreated
+pubkey_file: "path/to/your/ir_rsa.pub"
 ```
 2. Run below command to setup user, you will need to fill user's unix password during the run.
 ```sh
