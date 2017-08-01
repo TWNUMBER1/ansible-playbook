@@ -6,6 +6,8 @@
   tasks:
     - name: Get updated files from git repository 
       git: repo=https://github.com/TWNUMBER1/RestAPIPractice.git dest=~{{ unix_user }}/apps/RESTAPP
+      register: result
+      ignore_errors: True
 
     - name: chown apps to user 
       file:
@@ -13,4 +15,4 @@
         owner: "{{ unix_user }}"
         group: "{{ unix_user }}"
         recurse: yes
-        mode: 0700
+        mode: 0777

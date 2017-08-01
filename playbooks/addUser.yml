@@ -55,16 +55,11 @@
         }
         export PS1="\u@\h \[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ "
     become: yes
-    become_method: "sudo"
+    become_method: "sudo" 
 
   - name: Set up authorized keys for the deployer user
-    authorized_key: user={{unix_user}} key="{{item}}"
-    with_file:
-      - "{{ pubkey_file }}" #specify user's pub key
+    authorized_key: user={{unix_user}} key="{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
     become: yes
     become_method: "sudo"
-    when: 
-      - pubkey_file is defined
-      - pubkey_file|trim != "None"
 
       

@@ -1,5 +1,4 @@
 ---
 my_user: ubuntu   
-my_pass: 
+my_pass:
 unix_user:
-pubkey_file: 
