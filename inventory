@@ -2,4 +2,5 @@
 control_machine ansible_connection=local
 
 [cloud]
-ec2-34-229-88-78.compute-1.amazonaws.com 
+104.236.11.85
+#ec2-34-229-88-78.compute-1.amazonaws.com 

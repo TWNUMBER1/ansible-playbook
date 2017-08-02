@@ -11,6 +11,7 @@
       become: yes
       become_method: "sudo"
 
+- include: ./playbooks/configControl.yml
 - include: ./playbooks/configSSH.yml
 - include: ./playbooks/installDocker.yml
 - include: ./playbooks/installAnsible.yml

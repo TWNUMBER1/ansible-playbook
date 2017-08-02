@@ -46,7 +46,7 @@
 
   - name: modify bash_profile to show git branch name in shell
     blockinfile:
-      path: /home/testuser/.profile
+      path: /home/{{unix_user}}/.profile
       state: present
       marker: "## {mark} ANSIBLE MANAGED BLOCK"
       content: |
