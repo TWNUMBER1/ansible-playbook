@@ -12,6 +12,7 @@
       become_method: "sudo"
 
 - include: ./playbooks/configControl.yml
+- include: ./playbooks/ssh_keyscan.yml
 - include: ./playbooks/addUser.yml
 - include: ./playbooks/configSSH.yml
 - include: ./playbooks/installDocker.yml
